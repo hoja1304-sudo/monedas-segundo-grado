@@ -199,7 +199,7 @@ img{-webkit-user-drag:none;user-drag:none}.coin-source,.placed-coin{-webkit-user
  .print-coins{display:flex;flex-wrap:wrap;align-items:center;gap:6pt}
  .print-coins img{height:auto;display:block}
 }
-.voice-button{white-space:nowrap}.voice-button.speaking{border-color:var(--ink);background:var(--ink);color:#fff}
+.voice-button{white-space:nowrap}@media(max-width:680px){.nav-actions button{padding-inline:12px;white-space:nowrap}}.voice-button.speaking{border-color:var(--ink);background:var(--ink);color:#fff}
 
 /* Arrastre táctil: la moneda se toma con el dedo; la página se desplaza tocando fuera de las monedas. */
 .coin-source img,.placed-coin img{touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
