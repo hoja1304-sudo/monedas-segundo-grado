@@ -285,7 +285,7 @@ html[data-theme="dark"] .level-problem{background:#424b53;border-color:var(--lin
  <article class="level-problem"><p id="levelQuestion" class="level-question"></p><div class="level-tools"><button id="levelPrintButton" class="secondary" type="button">Imprimir</button><button id="levelPdfButton" class="secondary" type="button">Descargar PDF</button></div></article>
  <div class="workspace"><aside class="wallet"><h3>Monedas</h3><p class="wallet-note">Arrastra una moneda a la pizarra, o tócala y luego toca la pizarra.</p><div id="levelCoinList" class="coin-list"></div></aside><section id="levelBoard" class="payment level-board" tabindex="0" aria-label="Pizarra Respuesta"><div class="payment-head"><h3>Respuesta</h3></div></section></div>
  <div class="actions"><button id="levelRemoveButton" class="secondary" type="button" disabled>Retirar moneda seleccionada</button><button id="levelResetButton" class="secondary" type="button">Limpiar respuesta</button><button id="levelCheckButton" class="primary" type="button">Comprobar</button></div>
- <div id="levelFeedback" class="feedback" role="status" aria-live="polite">Coloca las monedas de tu respuesta en la pizarra.</div>
+ <div class="feedback-wrap"><div id="levelReaction" class="reaction" hidden><img id="levelReactionImage" alt=""></div><div id="levelFeedback" class="feedback" role="status" aria-live="polite">Coloca las monedas de tu respuesta en la pizarra.</div></div>
  <section id="levelSolution" class="solution" hidden><h3>Una respuesta correcta</h3><div id="levelSolutionCoins" class="solution-coins"></div></section>
 </section>
 </main><script>
@@ -784,7 +784,7 @@ function newLevelProblem(){
  levelMessage("Coloca las monedas de tu respuesta en la pizarra.","");q("#levelSolution").hidden=true;
  renderLevel()
 }
-function levelMessage(text,type){var f=q("#levelFeedback");f.textContent=text;f.className="feedback"+(type?" "+type:"")}
+function levelMessage(text,type){var f=q("#levelFeedback");f.textContent=text;f.className="feedback"+(type?" "+type:"");var box=q("#levelReaction"),im=q("#levelReactionImage");box.hidden=!type;if(type){im.src=type==="good"?ASSETS.good:ASSETS.try;im.alt=type==="good"?"¡Muy bien!":"Revisa tu respuesta"}}
 function renderLevel(){
  var list=q("#levelCoinList");list.replaceChildren();
  DENOMS.forEach(function(value){
@@ -847,9 +847,9 @@ function showLevelSolution(){var box=q("#levelSolutionCoins");box.replaceChildre
 function checkLevel(){
  if(lv.solved)return;
  var values=lv.coins.map(function(c){return c.value}),p=lv.problem;
- if(!values.length){levelMessage("Primero coloca monedas en la pizarra Respuesta.","try");return}
+ if(!values.length){levelMessage("Primero coloca monedas en la pizarra Respuesta.","");return}
  var sumOk=sumCoins(values)===p.target,rOk=ruleOk(p.rule,values);
- if(sumOk&&rOk){lv.solved=true;renderLevel();q("#levelSolution").hidden=true;levelMessage("¡Muy bien! Tu respuesta es correcta. "+p.explain,"good");return}
+ if(sumOk&&rOk){lv.solved=true;renderLevel();q("#levelSolution").hidden=true;levelMessage("🎉 ¡Muy bien! Tu respuesta es correcta. "+p.explain,"good");return}
  showLevelSolution();
  levelMessage(sumOk?"La cantidad es correcta, pero no cumple la condición: "+p.cond+".":"Las monedas que colocaste no forman la cantidad correcta. "+p.explain,"try")
 }
