@@ -756,7 +756,26 @@ function makeLevelForbidPay(){
    explain:"Una forma correcta es "+sumText(solution)+"."}
  }
 }
-var LEVEL_MAKERS=[makeLevelChange,makeLevelPay,makeLevelForbidPay],levelQueue=[];
+/* Tipo 4 (como el de Roger y Cristian): vuelto con la mayor cantidad posible de una moneda y el resto con otra. */
+function nCoins(n,d){return (n===1?"una moneda":n+" monedas")+" de "+money(d)}
+var LV_PAIRS=[[25,10],[25,10],[50,10],[50,25],[100,25],[100,10]];
+function makeLevelMaxCoins(){
+ for(var tries=0;tries<300;tries++){
+  var pair=pick(LV_PAIRS),A=pair[0],B=pair[1],paid=Math.random()<.8?1000:500,change=random(8,45)*5;
+  if(change>=paid)continue;
+  var a=-1;for(var n=Math.floor(change/A);n>=0;n--){if((change-n*A)%B===0){a=n;break}}
+  if(a<1)continue;
+  var b=(change-a*A)/B;if(b<1||a+b>12)continue;
+  var solution=[];for(var i=0;i<a;i++)solution.push(A);for(var j=0;j<b;j++)solution.push(B);
+  var rule={forbid:[],exact:{},only:[A,B]};rule.exact[A]=a;
+  var names=shuffle(PEOPLE.concat(["Roger","Cristian","Priscila"])),payer=names[0],seller=names[1],price=paid-change;
+  var extra=a<Math.floor(change/A)?" (con "+(a+1)+" monedas de "+money(A)+" el resto no se podría dar con monedas de "+money(B)+")":"";
+  return{target:change,rule:rule,solution:solution,cond:"la mayor cantidad posible de monedas de "+money(A)+" y el resto con monedas de "+money(B),
+   question:payer+" debe pagarle a "+seller+" "+money(price)+" y le entrega "+(paid===1000?"un billete de "+money(1000):"una moneda de "+money(500))+". Si "+seller+" le devuelve el vuelto usando la mayor cantidad posible de monedas de "+money(A)+" y el resto con monedas de "+money(B)+", coloca las monedas que usó "+seller+" para devolverle el vuelto a "+payer+".",
+   explain:money(paid)+" − "+money(price)+" = "+money(change)+". Se pueden usar como máximo "+nCoins(a,A)+" ("+money(a*A)+")"+extra+", y el resto, "+money(change-a*A)+", "+(b===1?"es ":"son ")+nCoins(b,B)+"."}
+ }
+}
+var LEVEL_MAKERS=[makeLevelChange,makeLevelPay,makeLevelForbidPay,makeLevelMaxCoins],levelQueue=[];
 function newLevelProblem(){
  if(!levelQueue.length)levelQueue=shuffle(LEVEL_MAKERS);
  lv.problem=levelQueue.pop()()||makeLevelPay();
