@@ -279,6 +279,18 @@ html[data-theme="dark"] .level-problem{background:#424b53;border-color:var(--lin
 .rel-question{justify-items:center;text-align:center}
 .rel-coin img{display:block;width:calc(clamp(2.6px,.4vw,3.6px)*var(--d));height:auto;filter:drop-shadow(0 8px 10px rgba(20,30,26,.22))}
 html[data-theme="dark"] .theory-coin img,html[data-theme="dark"] .rel-coin img{filter:drop-shadow(0 8px 10px rgba(0,0,0,.4))}
+
+/* Botones de la página principal, cada uno con su color */
+.home-actions button{border:1px solid transparent!important;color:#fff!important;box-shadow:0 10px 22px -12px var(--btn-shadow,rgba(20,30,26,.5))!important}
+.home-actions button:hover{filter:brightness(1.08)!important;transform:translateY(-1px)}
+.home-actions #theoryButton{background:#2f6db3!important;--btn-shadow:rgba(47,109,179,.7)}
+.home-actions #startButton{background:#1f7a57!important;--btn-shadow:rgba(31,122,87,.7)}
+.home-actions #problemStartButton{background:#b8581a!important;--btn-shadow:rgba(184,88,26,.7)}
+.home-actions #levelPlusButton{background:#6a4bbf!important;--btn-shadow:rgba(106,75,191,.7)}
+html[data-theme="dark"] .home-actions #theoryButton{background:#3f7fc4!important}
+html[data-theme="dark"] .home-actions #startButton{background:#2a8c65!important}
+html[data-theme="dark"] .home-actions #problemStartButton{background:#c4672a!important}
+html[data-theme="dark"] .home-actions #levelPlusButton{background:#7a5bd0!important}
 </style>
 <script>try{if(localStorage.getItem("monedas-tema")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 </head>
